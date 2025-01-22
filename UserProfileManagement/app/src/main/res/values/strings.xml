@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">UserProfileManagement</string>
+    <string name="openuserprofilepage">OpenUserProfilePage</string>
+    <string name="user_profile_page">User Profile Page</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="save">Save</string>
+</resources>
