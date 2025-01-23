@@ -1,7 +1,6 @@
 package com.example.userprofilemanagement
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
@@ -9,14 +8,20 @@ import android.widget.EditText
 import android.widget.Toast
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.userprofilemanagement.data.model.UserProfile
+import com.example.userprofilemanagement.data.repository.UserProfileRepository
+import kotlinx.coroutines.launch
 
 class UserProfileActivity : AppCompatActivity() {
 
     private val userList = mutableListOf<UserProfile>()
     private lateinit var adapter: UserProfileAdapter
+
+    private lateinit var userProfileRepository: UserProfileRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +32,8 @@ class UserProfileActivity : AppCompatActivity() {
         val saveBtn = findViewById<Button>(R.id.buttonSave)
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerviewUserProfiles)
+
+        userProfileRepository = UserProfileRepository(this)
 
         adapter = UserProfileAdapter(userList)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -49,7 +56,10 @@ class UserProfileActivity : AppCompatActivity() {
 
             //lets do some field validation
             if(userEmail.isNotEmpty() && userEmail.isNotEmpty()){
-                saveUserProfile(userName, userEmail, sharedPreferences)
+
+                lifecycleScope.launch {
+                    saveUserProfile(userName, userEmail, sharedPreferences)
+                }
 
 //                val intent = Intent(this, UserDetailActivity::class.java).apply {
 //                    putExtra("userName", userName)
@@ -68,21 +78,29 @@ class UserProfileActivity : AppCompatActivity() {
             etName.setText(null)
             etName.requestFocus()
         }
-
+        lifecycleScope.launch { loadUserProfiles() }
 
     }
 
-    private fun saveUserProfile(userName: String, email: String, sharedPreferences: SharedPreferences) {
+    private suspend fun saveUserProfile(userName: String, email: String, sharedPreferences: SharedPreferences) {
 
+        val id = userProfileRepository.insertUserProfile(com.example.userprofilemanagement.data.model.UserProfile(userName = userName, userEmail = email))
+        val userProfile = UserProfile(id, userName, email)
         val editor = sharedPreferences.edit()
         editor.putString("name", userName)
         editor.putString("email", email)
         editor.apply()
 
         //lets add data to the recyclerview
-        val userProfile = UserProfile(userName, email)
+        //val userProfile = UserProfile(userName, email)
         userList.add(userProfile)
         adapter.notifyDataSetChanged()
         Toast.makeText(applicationContext, "Profile Saved: $userName, $email", Toast.LENGTH_SHORT).show()
+    }
+    //lets load the user profiles
+    private suspend fun loadUserProfiles() {
+        val userList = userProfileRepository.getAllUserProfiles()
+        adapter.userList.addAll(userList)
+        adapter.notifyDataSetChanged()
     }
 }

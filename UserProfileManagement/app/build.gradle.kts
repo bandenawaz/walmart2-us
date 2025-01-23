@@ -1,7 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    //id("com.google.devtools.ksp")
+    //id("com.google.devtools.ksp")
+
 }
+
 
 android {
     namespace = "com.example.userprofilemanagement"
@@ -17,6 +21,9 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures{
+        buildConfig = true
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -35,8 +42,14 @@ android {
     }
 }
 
+
 dependencies {
 
+  // val room_version = "2.6.1"
+
+    implementation(libs.androidx.room.runtime)
+    implementation (libs.androidx.room.ktx)
+    //ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -46,3 +59,4 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
+
