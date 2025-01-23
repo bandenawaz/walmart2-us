@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.userprofilemanagement.data.model.UserProfile
 import com.example.userprofilemanagement.data.repository.UserProfileRepository
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class UserProfileActivity : AppCompatActivity() {
 
     private val userList = mutableListOf<UserProfile>()
@@ -104,3 +106,14 @@ class UserProfileActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
     }
 }
+
+/*
+DI using HILT
+Annotations
+1. @HiltAndroidApp
+2. @AndroidEntryPoint
+3. @Inject
+4.@Module
+5.@Provides
+6. @Singleton
+ */

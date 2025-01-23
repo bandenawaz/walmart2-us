@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     //id("com.google.devtools.ksp")
     //id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 
 }
 
@@ -50,6 +51,8 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation (libs.androidx.room.ktx)
     //ksp(libs.androidx.room.compiler)
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.android.compiler)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

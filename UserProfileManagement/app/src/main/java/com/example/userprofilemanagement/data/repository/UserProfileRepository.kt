@@ -3,12 +3,16 @@ package com.example.userprofilemanagement.data.repository
 import android.content.Context
 import com.example.userprofilemanagement.data.database.AppDatabase
 import com.example.userprofilemanagement.data.model.UserProfile
+import com.example.userprofilemanagement.data.model.dao.UserProfileDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class UserProfileRepository(context: Context) {
+@Singleton
+class UserProfileRepository @Inject constructor(private val userProfileDao: UserProfileDao) {
 
-    private val userProfileDao = AppDatabase.getDatabase(context).userProfileDao()
+    //private val userProfileDao = AppDatabase.getDatabase(context).userProfileDao()
 
     //Function to insert User Profile
     suspend fun insertUserProfile(userProfile: UserProfile): Long {
