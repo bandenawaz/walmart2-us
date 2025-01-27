@@ -5,4 +5,13 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="add_event">Add Event</string>
+    <string name="event_title">Event Title</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="location">Location</string>
+    <string name="event_date">Event Date(YYYY-MM-DD)</string>
+    <string name="event_time">Event Time(HH:MM AM/PM)</string>
+    <string name="event_location">Evet Location</string>
+    <string name="event_description">Event Descriptione</string>
+    <string name="save_event">Save Event</string>
 </resources>

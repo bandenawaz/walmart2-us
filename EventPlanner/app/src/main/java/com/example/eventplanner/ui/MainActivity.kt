@@ -1,5 +1,6 @@
 package com.example.eventplanner.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -54,7 +55,8 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this){ task ->
                 if (task.isSuccessful){
                     Toast.makeText(this, "User Created Successfully", Toast.LENGTH_SHORT).show()
-                    //Navigate to Home Screen
+
+
                 }else{
                     Toast.makeText(this, "Registration Failed : ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
@@ -69,6 +71,7 @@ class MainActivity : AppCompatActivity() {
                 if (task.isSuccessful){
                     Toast.makeText(this, "User Authenticated Successfully", Toast.LENGTH_SHORT).show()
                     //Navigate to Home Screen
+                    startActivity(Intent(this, HomeActivity::class.java))
                 }else{
                     Toast.makeText(this, "Authentication Failed : ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
